@@ -5,9 +5,9 @@ const DonutImage = () => {
 
   return (
       <div className={"image_container"}>
-          <img src={imageSrc} alt="Donut" className={"donut_image"}/>
-          <div/>
-);
+          <img src={imageSrc} alt="Donut" className={"donut_image"}/>git branch -M main
+      </div>
+  );
 };
 
 export default DonutImage;
