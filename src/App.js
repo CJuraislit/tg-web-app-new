@@ -1,24 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from "./components/Header/Header";
+import {TonConnectUIProvider} from "@tonconnect/ui-react";
+import {useEffect, useState} from "react";
+import {useTelegram} from "./hooks/useTelegarm";
+import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
+import NavButtonContainer from "./components/NavButtonContainer/NavButtonContainer";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    const [showIntro, setShowIntro] = useState(true);
+
+    const {tg} = useTelegram();
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowIntro(false);
+        }, 2000)
+        return () => { clearTimeout(timer) }
+    }, []);
+
+    useEffect(() => {
+        tg.ready();
+    }, []);
+
+    if (showIntro) {
+        return (
+            <div >
+                <LoadingScreen/>
+            </div>
+        )
+    }
+
+    return (
+      <TonConnectUIProvider manifestUrl={"https://9b85-109-229-137-196.ngrok-free.app"}>
+          <div className="App">
+              <Header/>
+
+              <NavButtonContainer/>
+          </div>
+      </TonConnectUIProvider>
   );
 }
 
